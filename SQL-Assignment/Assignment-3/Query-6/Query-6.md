@@ -25,3 +25,10 @@ WHERE
     AND os.STATUS_DATETIME >= "2024-11-01 00:00:00.000"
 GROUP BY
     f.FACILITY_ID;
+
+
+```
+| Type   | Cost     | Rows  |
+|--------|----------|-------|
+| select | 23110.61 | 1148  |
+
