@@ -1,12 +1,14 @@
-class Oops1 {
-
-    void display(){
-        System.out.println("Hello World");
+class Animal{
+    public void eat(){
+        System.out.println("I am Eating");
+    }
+    public void run(){
+        System.out.println("I am Running");
     }
 
     public static void main(String[] args) {
-
-        Oops1 obj = new Oops1();
-        obj.display();
+        Animal tommy = new Animal();
+        tommy.eat();
+        tommy.run();
     }
 }
