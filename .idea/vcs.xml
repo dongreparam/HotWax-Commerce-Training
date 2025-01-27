@@ -2,6 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Documentation/oms-documentation" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/Learning-Java/Java-Core/Objects-Classes-Methods" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Moqui-Training" vcs="Git" />
   </component>
 </project>
