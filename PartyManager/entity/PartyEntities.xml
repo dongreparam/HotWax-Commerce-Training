@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-3.xsd">
+
+<!--    Creating Party and its related Entities    -->
+    <entity entity-name="Party" package="PartyManager">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="partyTypeEnumId" type="id"/>
+        <field name="externalId" type="id"/>
+        <field name="statusId" type="id"/>
+        <field name="description" type="text-medium"/>
+        <relationship type="one" related="moqui.basic.Enumeration" short-alias="type" title="PartyType">
+            <key-map field-name="partyTypeEnumId"/>
+        </relationship>
+        <relationship type="one-nofk" related="PartyManager.Organization" short-alias="org" mutable="true"/>
+        <relationship type="one-nofk" related="PartyManager.Person" short-alias="prsn" mutable="true"/>
+
+        <seed-data>
+            <moqui.basic.EnumerationType description="PartyType" enumTypeId="PartyType"/>
+            <moqui.basic.Enumeration description="Person" enumTypeId="PartyType" enumId="ptyPerson"/>
+            <moqui.basic.Enumeration description="Organization" enumTypeId="PartyType" enumId="ptyOrganization"/>
+
+            <PartyManager.Party partyId="10001" partyTypeEnumId="ptyPerson"/>
+            <PartyManager.Party partyId="10002" partyTypeEnumId="ptyPerson"/>
+            <PartyManager.Party partyId="10003" partyTypeEnumId="ptyOrganization"/>
+            <PartyManager.Party partyId="10004" partyTypeEnumId="ptyOrganization"/>
+
+
+            <PartyManager.Person partyId="10001" firstName="Param" lastName="Dongre" dateOfBirth="2003-09-23"/>
+            <PartyManager.Person partyId="10002" firstName="Samarth" lastName="Dongre" dateOfBirth="2007-02-11"/>
+            <PartyManager.Organization partyId="10003" organizationName="MyCompany"/>
+            <PartyManager.Organization partyId="10004" organizationName="YourCompany"/>
+        </seed-data>
+
+        <master name="default">
+            <detail relationship="Type"/>
+            <detail relationship="Person"/>
+            <detail relationship="Organization"/>
+            <detail relationship="Status"/>
+        </master>
+    </entity>
+
+
+    <entity entity-name="Person" package="PartyManager">
+        <field name="partyId" type="id" is-pk="true" not-null="true"/>
+        <field name="firstName" type="text-medium" not-null="true"/>
+        <field name="lastName" type="text-medium"/>
+        <field name="dateOfBirth" type="date" not-null="true"/>
+        <relationship type="one" related="PartyManager.Party">
+            <key-map field-name="partyId" related="partyId"/>
+        </relationship>
+    </entity>
+
+    <entity entity-name="Organization" package="PartyManager">
+        <field name="partyId" type="id" is-pk="true" not-null="true"/>
+        <field name="organizationName" type="text-medium" not-null="true"/>
+        <relationship type="one" related="PartyManager.Party">
+            <key-map field-name="partyId" related="partyId"/>
+        </relationship>
+    </entity>
+    
+<!--    Creating Contact Mech Entity and its related Entities-->
+    <entity entity-name="ContactMech" package="PartyManager">
+        <field name="contactMechId" type="id" is-pk="true"/>
+        <field name="contactMechTypeEnumId" type="id"/>
+        <field name="infoString" type="text-medium"/>
+
+        <relationship type="one" related="moqui.basic.Enumeration" title="ContactMechType" short-alias="contactType">
+            <key-map field-name="contactMechTypeEnumId"/>
+        </relationship>
+
+        <relationship type="one-nofk" related="PartyManager.TelecomNumber" title="TelecomNumber"/>
+        <relationship type="one-nofk" related="PartyManager.PostalAddress" title="PostalAddress"/>
+
+
+        <seed-data>
+            <moqui.basic.EnumerationType description="Different Types of ContactMech" enumTypeId="ContactMechType"/>
+            <moqui.basic.Enumeration enumTypeId="ContactMechType" enumId="cmtyTelecomNumber" description="Telecom Number"/>
+            <moqui.basic.Enumeration enumTypeId="ContactMechType" enumId="cmtyPostalAddress" description="Postal Address"/>
+            <moqui.basic.Enumeration enumTypeId="ContactMechType" enumId="cmtyEmailAddress" description="Email Address"/>
+
+            <PartyManager.ContactMech contactMechId="10001" contactMechTypeEnumId="cmtyTelecomNumber"/>
+            <PartyManager.ContactMech contactMechId="10002" contactMechTypeEnumId="cmtyPostalAddress"/>
+            <PartyManager.ContactMech contactMechId="10003" contactMechTypeEnumId="cmtyEmailAddress" infoString="param.dongre@gmail.com"/>
+        </seed-data>
+
+
+        <master name="default">
+            <detail relationship="TelecomNumber"/>
+            <detail relationship="PostalAddress"/>
+        </master>
+    </entity>
+
+
+
+    <entity entity-name="TelecomNumber" package="PartyManager">
+        <field name="contactMechId" type="id" is-pk="true" not-null="true"/>
+        <field name="contactNumber" type="text-medium" not-null="true"/>
+        <relationship type="one" related="PartyManager.ContactMech">
+            <key-map field-name="contactMechId" related="contactMechId"/>
+        </relationship>
+    </entity>
+
+    <entity entity-name="PostalAddress" package="PartyManager">
+        <field name="contactMechId" type="id" is-pk="true" not-null="true"/>
+        <field name="address" type="text-medium" not-null="true"/>
+        <field name="city" type="text-medium" not-null="true"/>
+        <field name="country" type="text-medium" not-null="true"/>
+        <relationship type="one" related="PartyManager.ContactMech">
+            <key-map field-name="contactMechId" related="contactMechId"/>
+        </relationship>
+    </entity>
+
+
+<!--    Creating Roles for Party-->
+
+    <entity entity-name="PartyRole" package="PartyManager">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="roleTypeEnumId" type="id" is-pk="true"/>
+        <relationship type="one" related="PartyManager.Party"/>
+        <relationship type="one" related="moqui.basic.Enumeration" title="RoleType" short-alias="roletype">
+            <key-map field-name="roleTypeEnumId"/>
+        </relationship>
+
+        <seed-data>
+            <moqui.basic.EnumerationType description="Types of Role of a Party" enumTypeId="RoleType"/>
+            <moqui.basic.Enumeration description="customer" enumId="rtyCustomer" enumTypeId="RoleType"/>
+            <moqui.basic.Enumeration description="owner" enumId="rtyOwner" enumTypeId="RoleType"/>
+            <moqui.basic.Enumeration description="employee" enumId="rtyEmployee" enumTypeId="RoleType"/>
+
+            <PartyManager.PartyRole partyId="10001" roleTypeEnumId="rtyOwner"/>
+            <PartyManager.PartyRole partyId="10002" roleTypeEnumId="rtyEmployee"/>
+        </seed-data>
+    </entity>
+
+
+</entities>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-3.xsd">
+
+
+<!--    Creating a Party with PartyId-->
+    <service verb="create" noun="PartyManager.Party" type="entity-auto">
+        <in-parameters>
+            <parameter name="partyId" required="true"/>
+            <parameter name="partyTypeEnumId" required="true"/>
+            <auto-parameters include="nonpk" required="false" />
+        </in-parameters>
+        <out-parameters>
+            <auto-parameters include="all" required="true"/>
+        </out-parameters>
+    </service>
+
+<!--    Creating a Party without PartyId-->
+<!--    <service verb="create" noun="PartyManager.Party" type="entity-auto">-->
+<!--        <in-parameters>-->
+<!--&lt;!&ndash;            <parameter name="partyId" required="true"/>&ndash;&gt;-->
+<!--            <auto-parameters include="nonpk" required="true" />-->
+<!--        </in-parameters>-->
+<!--        <out-parameters>-->
+<!--            <parameter name="partyId"/>-->
+<!--            <auto-parameters include="nonpk"/>-->
+<!--        </out-parameters>-->
+<!--    </service>-->
+
+<!--    Deleting a Party -->
+    <service verb="delete" noun="PartyManager.Party" type="entity-auto">
+        <in-parameters>
+            <auto-parameters include="pk" required="true"/>
+        </in-parameters>
+    </service>
+
+<!--    Getting a Party -->
+
+    <service verb="get" noun="PartyManager.Party" type="inline">
+        <in-parameters>
+            <parameter name="partyId" required="true"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="FetchParty"/>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="PartyManager.Party" list="FetchParty">
+                <econdition field-name="partyId" from="context.partyId" ignore="false"/>
+            </entity-find>
+        </actions>
+    </service>
+    
+<!--    Updating Details of the Party-->
+    
+    <service verb="update" noun="PartyManager.Party" type="inline">
+        <in-parameters>
+            <parameter name="partyId" required="true"/>
+            <auto-parameters include="nonpk" required="false"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="partyDetail"/>
+        </out-parameters>
+        <actions>
+            <entity-find-one entity-name="PartyManager.Party" value-field="partyDetail"/>
+            <entity-set value-field="partyDetail" map="context"/>
+            <entity-update value-field="partyDetail"/>
+        </actions>
+    </service>
+
+
+
+    <service verb="create" noun="PartyManager.Person">
+    <in-parameters>
+        <auto-parameters entity-name="PartyManager.Person" include="nonpk"/>
+        <parameter name="firstName" required="true"/>
+        <parameter name="lastName" required="true"/>
+        <parameter name="partyId" entity-name="PartyManager.Party"/>
+    </in-parameters>
+    <out-parameters>
+        <parameter name="partyId"/>
+        <parameter name="firstName"/>
+    </out-parameters>
+    <actions>
+    <service-call name="create#PartyManager.Party" in-map="context + [partyTypeEnumId:'PtyPerson']" out-map="context"/>
+        <entity-create value-field="context" or-update="true"/>
+    </actions>
+    </service>
+</services>
