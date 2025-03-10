@@ -28,13 +28,15 @@ under the License.
         <attribute name="firstName" type="String" mode="IN"/>
         <attribute name="lastName" type="String" mode="IN"/>
         <attribute name="email" type="String" mode="IN"/>
-<!--        <attribute name="partyId" type="String" mode="OUT"/>-->
+        <attribute name="partyId" type="String" mode="OUT"/>
     </service>
     
     <service name="AddDetailsOfCustomer" engine="groovy" location="component://customerMgr/src/main/groovy/com/companyname/customerMgr/AddingDetailsCustomer.groovy">
         <attribute name="address" type="String" mode="IN"/>
         <attribute name="city" type="String" mode="IN"/>
         <attribute name="phoneNumber" type="String" mode="IN"/>
+        <attribute name="partyId" type="String" mode="IN"/>
+        <attribute name="firstName" type="String" mode="OUT"/>
     </service>
     
 </services>

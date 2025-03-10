@@ -55,17 +55,37 @@ under the License.
         <security https="true" auth="true"/>
         <event type="service" path="" invoke="CreateACustomer"/>
 <!--        <event type="groovy" path="component://customerMgr/src/main/groovy/com/companyname/customerMgr/CustomerManagerServices.groovy"/>-->
-        <response name="success" type="view" value="AddingDetails"/>
-        <response name="success" type="request-redirect" value="submitContactInfo">
+        <response name="success" type="request" value="passingDetails">
             <redirect-parameter name="partyId"/>
         </response>
+        <response name="error" type="view" value="loginpage"/>
     </request-map>
+
+    <request-map uri="passingDetails">
+        <security https="true" auth="true"/>
+        <response name="success" type="view" value="AddingDetails"/>
+    </request-map>
+
     <request-map uri="submitContactInfo">
         <event type="service" path="" invoke="AddDetailsOfCustomer"/>
-        <response name="success" type="view" value="AddingDetails"/>
+        <response name="success" type="request" value="Details">
+            <redirect-parameter name="partyId"/>
+            <redirect-parameter name="firstName"/>
+        </response>
+    </request-map>
+
+    <request-map uri="Details">
+        <response name="success" type="view" value="DetailsAdded"/>
+    </request-map>
+
+    <request-map uri="customerDashboard">
+        <response name="success" type="view" value="dashboard">
+        </response>
     </request-map>
     <!-- View Mappings -->
     <view-map name="loginpage" type="screen" page="component://customerMgr/widget/CustomerMgrScreens.xml#LoginPage"/>
+    <view-map name="dashboard" type="screen" page="component://customerMgr/widget/CustomerMgrScreens.xml#Dashboard"/>
     <view-map name="AddingDetails" type="screen" page="component://customerMgr/widget/CustomerMgrScreens.xml#AddingDetails"/>
+    <view-map name="DetailsAdded" type="screen" page="component://customerMgr/widget/CustomerMgrScreens.xml#DetailsAdded"/>
     <view-map name="main" type="screen" page="component://customerMgr/widget/CustomerMgrScreens.xml#main"/>
 </site-conf>

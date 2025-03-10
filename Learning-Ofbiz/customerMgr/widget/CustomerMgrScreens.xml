@@ -29,8 +29,13 @@ under the License.
             <widgets>
                 <decorator-screen name="CustomerMgrCommonDecorator" location="${parameters.mainDecoratorLocation}">
                     <decorator-section name="body">
-                        <screenlet title="Welcome">
-                            <label text="Hello World"/>
+                        <screenlet title="Home">
+                            <platform-specific>
+                                <html>
+                                    <html-template location="component://customerMgr/webapp/customerMgr/crud/Home.ftl"/>
+                                </html>
+                            </platform-specific>
+                            <!--                            <include-form name="CustomerLogin" location="component://customerMgr/widget/CustomerMgrForms.xml"/>-->
                         </screenlet>
                     </decorator-section>
                 </decorator-screen>
@@ -69,7 +74,8 @@ under the License.
             <actions>
                 <set field="headerItem" value="createCustomer"/>
                 <set field="titleProperty" value="Details for Customer"/>
-                <script location="component://customerMgr/src/main/groovy/com/companyname/customerMgr/CustomerManagerServices.groovy"/>
+<!--                <set field="partyId" from-field="parameters.partyId"/>-->
+<!--                <script location="component://customerMgr/src/main/groovy/com/companyname/customerMgr/AddingDetailsCustomer.groovy"/>-->
             </actions>
             <widgets>
                 <decorator-screen name="CustomerMgrCommonDecorator" location="${parameters.mainDecoratorLocation}">
@@ -81,6 +87,52 @@ under the License.
                                 </html>
                             </platform-specific>
                             <!--                            <include-form name="CustomerLogin" location="component://customerMgr/widget/CustomerMgrForms.xml"/>-->
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+
+    <screen name="DetailsAdded">
+        <section>
+            <actions>
+                <set field="headerItem" value="createCustomer"/>
+                <set field="titleProperty" value="Added Details for Customer"/>
+
+                <!--                <script location="component://customerMgr/src/main/groovy/com/companyname/customerMgr/AddingDetailsCustomer.groovy"/>-->
+            </actions>
+            <widgets>
+                <decorator-screen name="CustomerMgrCommonDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="Details Added">
+                            <platform-specific>
+                                <html>
+                                    <html-template location="component://customerMgr/webapp/customerMgr/crud/DetailsAdded.ftl"/>
+                                </html>
+                            </platform-specific>
+                            <!--                            <include-form name="CustomerLogin" location="component://customerMgr/widget/CustomerMgrForms.xml"/>-->
+                        </screenlet>
+                    </decorator-section>
+                </decorator-screen>
+            </widgets>
+        </section>
+    </screen>
+    <screen name="Dashboard">
+        <section>
+            <actions>
+                <set field="headerItem" value="createCustomer"/>
+                <set field="titleProperty" value="Dashboard for Customer"/>
+            </actions>
+            <widgets>
+                <decorator-screen name="CustomerMgrCommonDecorator" location="${parameters.mainDecoratorLocation}">
+                    <decorator-section name="body">
+                        <screenlet title="Dashboard">
+                            <platform-specific>
+                                <html>
+                                    <html-template location="component://customerMgr/webapp/customerMgr/crud/Dashboard.ftl"/>
+                                </html>
+                            </platform-specific>
                         </screenlet>
                     </decorator-section>
                 </decorator-screen>

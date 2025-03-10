@@ -26,6 +26,7 @@ Map<String, Object> result = ServiceUtil.returnSuccess()
 String address = (String) parameters.get("address")
 String phoneNumber = (String) parameters.get("phoneNumber")
 String city = (String) parameters.get("city")
+String partyId = (String) parameters.get("partyId")
 
 
 GenericValue contactMechA = delegator.makeValue("ContactMech")
@@ -41,12 +42,15 @@ delegator.create("ContactMech",contactMechMapA)
 
 println("------------------context--------------" + context)
 println("------------------parameters--------------" + parameters)
+println("----------------partyId----------------" + partyId)
 
+GenericValue person = EntityQuery.use(delegator).from("Person").where("partyId",partyId).queryOne()
+String firstName = (String) person.get("firstName")
 
 GenericValue postalAddress = delegator.makeValue("PostalAddress")
 Map<String, Object> postalAddressMap = [
         contactMechId: contactMechIdA,
-        toName : parameters.firstName,
+        toName : firstName,
         address1 : address,
         city : city
 ]
@@ -79,6 +83,35 @@ delegator.create("TelecomNumber",telecomNumberMap)
 println("------------------telecomNumber-------------" + telecomNumberMap)
 
 
+GenericValue partyContactMechA = delegator.makeValue("PartyContactMech")
+Map<String,Object> partyContactMechMapA = [
+        partyId : partyId,
+        contactMechId: contactMechIdA,
+        roleTypeId: "CUSTOMER",
+        fromDate : Timestamp.valueOf("2024-05-13 12:00:00.0")
+]
+delegator.create("PartyContactMech", partyContactMechMapA)
+
+println("------------------PartyContactMech-------------" + partyContactMechMapA)
 
 
 
+GenericValue partyContactMechT = delegator.makeValue("PartyContactMech")
+Map<String,Object> partyContactMechMapT = [
+        partyId : partyId,
+        contactMechId: contactMechIdT,
+        roleTypeId: "CUSTOMER",
+        fromDate : Timestamp.valueOf("2024-05-13 12:00:00.0")
+]
+delegator.create("PartyContactMech", partyContactMechMapT)
+
+println("------------------result---------------------" + result)
+println(firstName)
+
+result.put("firstName",firstName)
+println("------------------result---------------------" + result)
+
+println("------------------PartyContactMech-------------" + partyContactMechMapT)
+
+
+return result

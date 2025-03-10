@@ -109,6 +109,11 @@ import java.sql.Timestamp
 
     println("-------------------PartyContactMechPurpose------------" + partyContactMechPurposeMap)
 
+    result.put("partyId",partyId)
+
+
+    println("--------------------result------------------" + result)
+
 //        conditionList.add(EntityCondition.makeCondition("ContactMechPurposeTypeId", EntityOperator.EQUALS, "PRIMARY_EMAIL"))
 
     return result

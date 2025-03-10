@@ -9,18 +9,19 @@
     </div>
     <div class="screenlet-body">
       <form method="post" action="<@ofbizUrl>submitContactInfo</@ofbizUrl>" name="ContactInfoForm">
+        <input type="hidden" name="partyId" value="${parameters.partyId}"/>
         <table class="basic-table" cellspacing="0" style="width: 100%;">
           <tr>
-            <td class="label" style="padding: 10px;">Phone Number</td>
-            <td><input type="tel" name="phoneNumber" required size="20" style="padding: 8px; border-radius: 5px; border: none; width: 100%;"/></td>
+            <td class="label" style="padding: 10px; color: blue;">Phone Number</td>
+            <td><input type="tel" name="phoneNumber" required size="20" style="padding: 8px; border-radius: 5px; border:#999999 solid 0.1em; width: 100%;"/></td>
           </tr>
           <tr>
-            <td class="label" style="padding: 10px;">Address</td>
-            <td><textarea name="address" required rows="3" style="padding: 8px; border-radius: 5px; border: none; width: 100%;"></textarea></td>
+            <td class="label" style="padding: 10px; color: blue;">Address</td>
+            <td><textarea name="address" required rows="3" style="padding: 8px; border-radius: 5px; border:#999999 solid 0.1em; width: 100%;"></textarea></td>
           </tr>
           <tr>
-            <td class="label" style="padding: 10px;">City</td>
-            <td><input type="text" name="city" required size="20" style="padding: 8px; border-radius: 5px; border: none; width: 100%;"/></td>
+            <td class="label" style="padding: 10px; color: blue;">City</td>
+            <td><input type="text" name="city" required size="20" style="padding: 8px; border-radius: 5px; border:#999999 solid 0.1em; width: 100% ;"/></td>
           </tr>
           <tr>
             <td colspan="2" align="center" style="padding-top: 20px;">
@@ -29,6 +30,6 @@
           </tr>
         </table>
       </form>
-    </div>
+</div>
   </div>
 </center>
