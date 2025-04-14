@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entitymodel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:noNamespaceSchemaLocation="https://ofbiz.apache.org/dtds/entitymodel.xsd">
+    <view-entity entity-name="FindCustomer" package-name="customerMgr">
+
+        <!-- Base Entities -->
+        <member-entity entity-alias="PAR" entity-name="Party"/>
+        <member-entity entity-alias="PER" entity-name="Person"/>
+        <member-entity entity-alias="PCM" entity-name="PartyContactMech"/>
+        <member-entity entity-alias="CM" entity-name="ContactMech"/>
+        <member-entity entity-alias="PA" entity-name="PostalAddress"/>
+        <member-entity entity-alias="TN" entity-name="TelecomNumber"/>
+        <member-entity entity-alias="PCMP" entity-name="PartyContactMechPurpose"/>
+
+        <!-- Aliases for required fields -->
+        <alias name="partyId" field="partyId" entity-alias="PAR" />
+        <alias name="firstName" field="firstName" entity-alias="PER"/>
+        <alias name="lastName" field="lastName" entity-alias="PER"/>
+        <alias name="contactMechId" field="contactMechId" entity-alias="PCM"/>
+        <alias name="fromDate" field="fromDate" entity-alias="PCM"/>
+        <alias name="email" field="infoString" entity-alias="CM"/>
+        <alias name="address" field="address1" entity-alias="PA"/>
+        <alias name="city" field="city" entity-alias="PA"/>
+        <alias name="stateProvinceGeoId" field="stateProvinceGeoId" entity-alias="PA"/>
+        <alias name="postalCode" field="postalCode" entity-alias="PA"/>
+        <alias name="phoneNumber" field="contactNumber" entity-alias="TN"/>
+        <alias name="purpose" field="contactMechPurposeTypeId" entity-alias="PCMP"/>
+
+        <!-- View Links -->
+        <view-link entity-alias="PAR" rel-entity-alias="PER">
+            <key-map field-name="partyId"/>
+        </view-link>
+
+        <view-link entity-alias="PAR" rel-entity-alias="PCM">
+            <key-map field-name="partyId"/>
+        </view-link>
+
+        <view-link entity-alias="PCM" rel-entity-alias="CM">
+            <key-map field-name="contactMechId"/>
+        </view-link>
+
+        <view-link entity-alias="CM" rel-entity-alias="PA" rel-optional="true">
+            <key-map field-name="contactMechId"/>
+        </view-link>
+
+        <view-link entity-alias="CM" rel-entity-alias="TN" rel-optional="true">
+            <key-map field-name="contactMechId"/>
+        </view-link>
+
+        <view-link entity-alias="PCM" rel-entity-alias="PCMP" rel-optional="true">
+            <key-map field-name="partyId"/>
+            <key-map field-name="contactMechId"/>
+        </view-link>
+
+
+    </view-entity>
+
+
+    <!--    <view-entity entity-name="FindCustomerView" package-name="customerMgr">-->
+<!--        <member-entity entity-alias="PAR" entity-name="Party"/>-->
+<!--        <member-entity entity-alias="PER" entity-name="Person"/>-->
+<!--        <member-entity entity-alias="PR" entity-name="PartyRole"/>-->
+<!--        <member-entity entity-alias="PCM" entity-name="PartyContactMech"/>-->
+<!--        <member-entity entity-alias="CM" entity-name="ContactMech"/>-->
+<!--        <member-entity entity-alias="PA" entity-name="PostalAddress"/>-->
+<!--        <member-entity entity-alias="TN" entity-name="TelecomNumber"/>-->
+
+<!--        <alias name="address" field="address1" entity-alias="PA"/>-->
+<!--        <alias name="phoneNumber" field="contactNumber" entity-alias="TN"/>-->
+<!--        <alias name="firstName" field="firstName" entity-alias="PER"/>-->
+<!--        <alias name="lastName" field="lastName" entity-alias="PER"/>-->
+<!--        <alias name="email" field="infoString" entity-alias="CM"/>-->
+
+
+<!--        &lt;!&ndash; Party and Person Link &ndash;&gt;-->
+<!--        <view-link entity-alias="PAR" rel-entity-alias="PER">-->
+<!--            <key-map field-name="partyId"/>-->
+<!--        </view-link>-->
+
+<!--        &lt;!&ndash; Ensure only customers are fetched &ndash;&gt;-->
+<!--        <view-link entity-alias="PAR" rel-entity-alias="PR">-->
+<!--            <key-map field-name="partyId"/>-->
+<!--            <entity-condition>-->
+<!--                <condition-expr entity-alias="PR" field-name="roleTypeId" value="CUSTOMER"/>-->
+<!--            </entity-condition>-->
+<!--        </view-link>-->
+
+<!--        &lt;!&ndash; Single join for PartyContactMech and ContactMech &ndash;&gt;-->
+<!--        <view-link entity-alias="PAR" rel-entity-alias="PCM">-->
+<!--            <key-map field-name="partyId"/>-->
+<!--        </view-link>-->
+<!--        <view-link entity-alias="PCM" rel-entity-alias="CM">-->
+<!--            <key-map field-name="contactMechId"/>-->
+<!--        </view-link>-->
+
+<!--        &lt;!&ndash; Address Link &ndash;&gt;-->
+<!--        <view-link entity-alias="CM" rel-entity-alias="PA">-->
+<!--            <key-map field-name="contactMechId"/>-->
+<!--        </view-link>-->
+
+<!--        &lt;!&ndash; Phone Number Link &ndash;&gt;-->
+<!--        <view-link entity-alias="CM" rel-entity-alias="TN">-->
+<!--            <key-map field-name="contactMechId"/>-->
+<!--        </view-link>-->
+
+<!--    </view-entity>-->
+
+</entitymodel>
