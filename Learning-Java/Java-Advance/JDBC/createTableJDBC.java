@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.sql.Connection;
+
 
 public class createTableJDBC {
     public static void main(String[] args) {
@@ -20,10 +22,10 @@ public class createTableJDBC {
         try
         {
 
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
 
             Connection connection = DriverManager.getConnection(url, user, password);
-             Statement statement = connection.createStatement();
+            Statement statement = connection.createStatement();
 
 
             // Execute the create table query
